@@ -1,0 +1,39 @@
+#approach-1
+1.use hashmap of length nums.size()
+2.for every iteration mark them check map[i]=1 than unmark it.
+
+
+
+class Solution {
+    vector<vector<int>> ans;
+public:
+    void solve(vector<int> nums, vector<int> v,int n,vector<int> map )
+    {
+        if (v.size()==nums.size())
+        {
+            ans.push_back(v);
+            return ;
+        }
+        for (int i=0 ;i<nums.size();i++)
+        {
+            if (map[i]==0)
+            {
+            v.push_back(nums[i]);
+            map[i]=1;
+            solve(nums,v,n,map);
+            v.pop_back();
+            map[i]=0;
+            }
+            
+        }
+    }
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<int> v;
+        vector<int> map(nums.size(),0);
+        solve(nums,v,nums.size(),map);
+        return ans;
+        
+        
+        
+    }
+};
