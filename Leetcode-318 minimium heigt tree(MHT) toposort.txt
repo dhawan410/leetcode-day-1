@@ -1,0 +1,39 @@
+class Solution {
+public:
+    bool canFinish(int N, vector<vector<int>>& prerequisites) {
+        vector<int> adj[N];
+        for(auto it:prerequisites){
+            adj[it[1]].push_back(it[0]);
+        }
+        vector<int> topo;
+        int Indegree[2000]={0};
+        for(int i=0;i<N;i++)
+        {
+            for(auto it:adj[i]){
+                Indegree[it]++;
+            }
+        }
+        queue<int>q;
+        for(int i=0;i<N;i++){
+            if(Indegree[i]==0){
+                q.push(i);
+            }
+        }
+        while(!q.empty()){
+            int node=q.front();
+            q.pop();
+            topo.push_back(node);
+            for(auto it:adj[node]){
+                Indegree[it]--;
+                if(Indegree[it]==0){
+                    q.push(it);}
+            }
+        }
+        
+        if(topo.size()==N){
+            return true;
+        }
+        return false;
+        
+    }
+};
